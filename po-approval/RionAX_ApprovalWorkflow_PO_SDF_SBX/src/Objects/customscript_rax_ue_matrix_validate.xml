@@ -1,0 +1,21 @@
+<usereventscript scriptid="customscript_rax_ue_matrix_validate">
+  <name>RAX UE Matrix Validation</name>
+  <notifyowner>T</notifyowner>
+  <scriptfile>[/SuiteScripts/RionAX/rax_ue_matrix_validate.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_rax_ue_matrix_rule">
+      <status>RELEASED</status>
+      <isdeployed>T</isdeployed>
+      <loglevel>DEBUG</loglevel>
+      <allroles>T</allroles>
+      <recordtype>[scriptid=customrecord_rax_approval_rule]</recordtype>
+    </scriptdeployment>
+    <scriptdeployment scriptid="customdeploy_rax_ue_matrix_level">
+      <status>RELEASED</status>
+      <isdeployed>T</isdeployed>
+      <loglevel>DEBUG</loglevel>
+      <allroles>T</allroles>
+      <recordtype>[scriptid=customrecord_rax_approval_level]</recordtype>
+    </scriptdeployment>
+  </scriptdeployments>
+</usereventscript>

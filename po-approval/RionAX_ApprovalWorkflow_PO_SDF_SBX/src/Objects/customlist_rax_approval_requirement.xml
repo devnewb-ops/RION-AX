@@ -1,0 +1,15 @@
+<customlist scriptid="customlist_rax_approval_requirement">
+  <name>RAX Approval Requirement</name>
+  <isinactive>F</isinactive>
+  <isordered>T</isordered>
+  <customvalues>
+    <customvalue scriptid="customvalue_rax_req_required">
+      <value>Approval Required</value>
+      <isinactive>F</isinactive>
+    </customvalue>
+    <customvalue scriptid="customvalue_rax_req_notrequired">
+      <value>No Approval Needed</value>
+      <isinactive>F</isinactive>
+    </customvalue>
+  </customvalues>
+</customlist>

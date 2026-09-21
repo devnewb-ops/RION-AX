@@ -1,0 +1,10 @@
+<transactionbodycustomfield scriptid="custbody_rax_appr_level">
+  <applyformatting>F</applyformatting>
+  <bodypurchase>T</bodypurchase>
+  <displaytype>HIDDEN</displaytype>
+  <fieldtype>SELECT</fieldtype>
+  <label>Approval Level</label>
+  <storevalue>T</storevalue>
+  <selectrecordtype>[scriptid=customrecord_rax_approval_level]</selectrecordtype>
+  <subtab>[scriptid=custtab_rax_approval]</subtab>
+</transactionbodycustomfield>

@@ -1,0 +1,9 @@
+<transactionbodycustomfield scriptid="custbody_rax_appr_step_current">
+  <applyformatting>F</applyformatting>
+  <bodypurchase>T</bodypurchase>
+  <displaytype>HIDDEN</displaytype>
+  <fieldtype>INTEGER</fieldtype>
+  <label>Current Step</label>
+  <storevalue>T</storevalue>
+  <subtab>[scriptid=custtab_rax_approval]</subtab>
+</transactionbodycustomfield>

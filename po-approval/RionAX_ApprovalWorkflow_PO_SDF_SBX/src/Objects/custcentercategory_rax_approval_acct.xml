@@ -1,0 +1,19 @@
+<centercategory scriptid="custcentercategory_rax_approval_acct">
+  <center>ACCOUNTCENTER</center>
+  <centertab>ACCOUNTCENTERCENTERVENDORS</centertab>
+  <label>Approval Administration</label>
+  <links>
+    <link>
+      <linklabel>Approval Matrix</linklabel>
+      <linkobject>[scriptid=customscript_rax_sl_approval_admin.customdeploy_rax_sl_approval_admin]</linkobject>
+      <linktasktype>SCRIPT</linktasktype>
+      <shortlist>F</shortlist>
+    </link>
+    <link>
+      <linklabel>My Approvals</linklabel>
+      <linkobject>[scriptid=customscript_rax_sl_my_approvals.customdeploy_rax_sl_my_approvals]</linkobject>
+      <linktasktype>SCRIPT</linktasktype>
+      <shortlist>F</shortlist>
+    </link>
+  </links>
+</centercategory>
