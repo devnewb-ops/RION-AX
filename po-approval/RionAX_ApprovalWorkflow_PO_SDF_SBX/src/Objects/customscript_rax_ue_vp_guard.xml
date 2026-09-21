@@ -1,0 +1,14 @@
+<usereventscript scriptid="customscript_rax_ue_vp_guard">
+  <name>RAX UE VP Payment Guard</name>
+  <notifyowner>T</notifyowner>
+  <scriptfile>[/SuiteScripts/RionAX/rax_ue_vp_guard.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_rax_ue_vp_guard">
+      <status>RELEASED</status>
+      <isdeployed>T</isdeployed>
+      <loglevel>DEBUG</loglevel>
+      <allroles>T</allroles>
+      <recordtype>VENDORPAYMENT</recordtype>
+    </scriptdeployment>
+  </scriptdeployments>
+</usereventscript>

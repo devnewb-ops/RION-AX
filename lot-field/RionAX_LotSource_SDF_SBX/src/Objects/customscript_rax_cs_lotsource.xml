@@ -1,0 +1,15 @@
+<clientscript scriptid="customscript_rax_cs_lotsource">
+  <name>RAX CS Lot Source Item</name>
+  <notifyadmins>F</notifyadmins>
+  <scriptfile>[/SuiteScripts/RionAX/rax_cs_lotsource.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_rax_cs_lotsource">
+      <status>TESTING</status>
+      <isdeployed>T</isdeployed>
+      <loglevel>DEBUG</loglevel>
+      <allroles>T</allroles>
+      <alllocalizationcontexts>T</alllocalizationcontexts>
+      <recordtype>[scriptid=customrecord_rax_lot]</recordtype>
+    </scriptdeployment>
+  </scriptdeployments>
+</clientscript>

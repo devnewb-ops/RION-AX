@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RionAX - Lot Record Enhancements - Solution Estimate</title>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif; background-color:#f4f5f7; margin:0; padding:24px; color:#1f2430;">
+
+<div id="solutionapproach" style="max-width:820px; margin:0 auto; background:#ffffff; border:1px solid #dfe2e8; border-radius:8px; padding:32px;">
+
+  <div style="border-bottom:2px solid #14304d; padding-bottom:16px; margin-bottom:20px;">
+    <h1 style="margin:0; font-size:22px; color:#14304d;">Solution Estimate &amp; Approach</h1>
+    <p style="margin:4px 0 0 0; font-size:13px; color:#5b6472;">customrecord_rax_lot &mdash; Name Field Requirement &amp; Item Autofill</p>
+  </div>
+
+  <div style="background:#fff8e6; border:1px solid #f0d98c; border-radius:6px; padding:12px 16px; margin-bottom:20px; font-size:12px; color:#6b5514;">
+    <strong>Disclaimer:</strong> This document is a preliminary estimate based on information available at the time of authoring. Hours are estimates, not fixed-price commitments, and are subject to change following technical discovery, account-specific verification, and QA. Estimate validity: 30 days from the date below.
+  </div>
+
+  <table style="width:100%; border-collapse:collapse; margin-bottom:20px; font-size:13px;">
+    <tr>
+      <td style="padding:4px 8px; font-weight:bold; width:160px; color:#5b6472;">Consultant</td>
+      <td style="padding:4px 8px;" contenteditable="true" id="fld-consultant">David Patry</td>
+    </tr>
+    <tr>
+      <td style="padding:4px 8px; font-weight:bold; color:#5b6472;">Date</td>
+      <td style="padding:4px 8px;" contenteditable="true" id="fld-date">2026-09-17</td>
+    </tr>
+    <tr>
+      <td style="padding:4px 8px; font-weight:bold; color:#5b6472;">Project / Ticket Reference</td>
+      <td style="padding:4px 8px;" contenteditable="true" id="fld-ticket">N/A</td>
+    </tr>
+    <tr>
+      <td style="padding:4px 8px; font-weight:bold; color:#5b6472;">Customer</td>
+      <td style="padding:4px 8px;" contenteditable="true" id="fld-customer">RionAX</td>
+    </tr>
+    <tr>
+      <td style="padding:4px 8px; font-weight:bold; color:#5b6472;">Category</td>
+      <td style="padding:4px 8px;" contenteditable="true" id="fld-category">New Development &mdash; Standard Script (User Event) + Tech Services (record configuration)</td>
+    </tr>
+  </table>
+
+  <h2 style="font-size:15px; color:#14304d; border-bottom:1px solid #e0e3e8; padding-bottom:4px;">Completeness Findings</h2>
+  <p style="font-size:13px;">Score: <strong>5 / 5</strong></p>
+  <ul style="font-size:13px; line-height:1.6;">
+    <li><strong>Test cases:</strong> Present &mdash; four scenarios confirmed (see Testing Steps).</li>
+    <li><strong>Acceptance criteria:</strong> Present &mdash; Item field on a newly created Lot record must reflect the item on the PO line it was launched from; Name field is no longer required from the user.</li>
+    <li><strong>Data flow description:</strong> Present &mdash; Lot records are created inline via a List/Record sublist field on the Purchase Order line; a script on the Lot record resolves the originating PO line and sets Item accordingly.</li>
+    <li><strong>Specific business rules:</strong> Present &mdash; Item value is always set to match the originating PO line's item, including on edit (forced match, not fill-if-blank); blank PO line item leaves the Lot's Item blank without error.</li>
+    <li><strong>Edge cases:</strong> Present &mdash; blank PO line item (leave blank, no error); PO line removed after Lot record creation (record is left as-is, not deleted &mdash; see Assumptions).</li>
+  </ul>
+
+  <h2 style="font-size:15px; color:#14304d; border-bottom:1px solid #e0e3e8; padding-bottom:4px;">Estimate Summary</h2>
+  <p style="font-size:13px; line-height:1.6;">
+    Scope is limited to two items on <code>customrecord_rax_lot</code>: (1) removing the requirement for a user-entered Name value, and (2) ensuring the Item field is automatically set from the Purchase Order line the Lot record is created against. The Name requirement is resolved through native record-type configuration (auto-generated numbering is already enabled), not custom code. The Item autofill requires a new script on the Lot record, since no such logic exists today &mdash; the current <code>rax_ue_lot_capture.js</code> User Event only runs on Assembly Build, Item Fulfillment, and Item Receipt, and does not cover Lot records created inline from a Purchase Order line.
+  </p>
+  <p style="font-size:13px; line-height:1.6;">
+    Sizing reflects a single-field lookup/set operation with a forced-overwrite rule and one confirmed edge case, standard for a Small User Event script. A key estimate driver and open risk (see Risks) is whether NetSuite's native inline "New" creation for a List/Record sublist field exposes the originating transaction and line to a script on the child record at all &mdash; this determines whether the simpler approach sized here is technically achievable as scoped, or whether a larger UI-based approach is required.
+  </p>
+  <p style="font-size:13px; line-height:1.6;">
+    Key assumption: the sublist field on the Purchase Order line is a List/Record type field referencing <code>customrecord_rax_lot</code>, with an internal ID that has not yet been confirmed against the account. Key risk: context-passing feasibility, above.
+  </p>
+
+  <h2 style="font-size:15px; color:#14304d; border-bottom:1px solid #e0e3e8; padding-bottom:4px;">Solution Approach</h2>
+  <p style="font-size:13px; line-height:1.6;">
+    <strong>Name field:</strong> No development work. Since auto-generated numbering is already enabled on the <code>customrecord_rax_lot</code> record type, the Name field can be removed from user entry by disabling "Include Name Field" (or confirming numbering fully suppresses manual entry) on the record type definition. Before making this change, existing saved searches, scripts, or reports that reference the record's Name/altname field should be checked so nothing downstream breaks.
+  </p>
+  <p style="font-size:13px; line-height:1.6;">
+    <strong>Item autofill:</strong> A script deployed on the Lot record type will trigger when a Lot record is created inline from a Purchase Order line, resolve the originating PO and line, and set the Item field to match that line's item &mdash; including overwriting any value already present, consistent with the confirmed business rule. If the PO line has no item selected, the Item field is left blank without blocking the save. This depends on confirming that NetSuite passes enough context (the parent transaction and line) to the Lot record at creation time; this will be verified early in the build (see Risks) before development proceeds on the assumed approach.
+  </p>
+
+  <h2 style="font-size:15px; color:#14304d; border-bottom:1px solid #e0e3e8; padding-bottom:4px;">Testing Steps</h2>
+  <ul style="font-size:13px; line-height:1.6;">
+    <li><strong>Positive:</strong> Add a PO line, select "New" on the Lot sublist field, save the new Lot record &mdash; Item matches the PO line's item.</li>
+    <li><strong>Overwrite on edit:</strong> Edit an existing Lot record whose Item differs from its originating PO line &mdash; Item is corrected to match the PO line on save.</li>
+    <li><strong>Negative / blank item:</strong> PO line has no item selected when the Lot record is created &mdash; Item remains blank, no error, PO save is not blocked.</li>
+    <li><strong>Multiple lines:</strong> A single PO with several lines, each with its own new Lot record &mdash; each Lot record's Item matches only its own line, not another line's item.</li>
+    <li><strong>Regression:</strong> Confirm the existing <code>rax_ue_lot_capture.js</code> behavior on Assembly Build, Item Fulfillment, and Item Receipt is unaffected.</li>
+    <li><strong>Role/permission context:</strong> Confirm the autofill behaves consistently for the roles that create Purchase Orders and Lot records (e.g., Purchasing, Warehouse).</li>
+  </ul>
+
+  <h2 style="font-size:15px; color:#14304d; border-bottom:1px solid #e0e3e8; padding-bottom:4px;">Considerations</h2>
+  <ul style="font-size:13px; line-height:1.6;">
+    <li>The sublist field's internal ID (assumed <code>custcol_rax_lot</code>) has not been confirmed against the account and must be verified before build.</li>
+    <li>If NetSuite's native inline-creation popup does not expose the parent transaction/line to the Lot record, the fallback is a custom button/Suitelet that passes context via URL parameters &mdash; a materially larger Suitelet &amp; UI-sized effort. This estimate assumes the simpler path is viable and should be confirmed with a short technical spike before committing to final hours.</li>
+    <li>Per <code>N/query</code> / <code>search.lookupFields</code> best practice, the PO line item lookup will avoid loading the full PO record where possible.</li>
+  </ul>
+
+  <h2 style="font-size:15px; color:#14304d; border-bottom:1px solid #e0e3e8; padding-bottom:4px;">Assumptions &amp; Out of Scope</h2>
+  <ul style="font-size:13px; line-height:1.6;">
+    <li>Assumes auto-generated numbering is already fully configured and functional on <code>customrecord_rax_lot</code> (no numbering setup work included).</li>
+    <li>Out of scope: any change to <code>rax_ue_lot_capture.js</code> or its deployments.</li>
+    <li>Out of scope: cleanup or deletion of a Lot record when its originating PO line is later removed &mdash; orphaned records are left as-is.</li>
+    <li>Out of scope: any handling of the Direction custom-list mapping noted as unresolved ("left for setup") in the existing script.</li>
+    <li>Out of scope: CSV import or SuiteQL/search-based paths for Lot record creation &mdash; only the PO-line inline-creation path is covered.</li>
+  </ul>
+
+  <h2 style="font-size:15px; color:#14304d; border-bottom:1px solid #e0e3e8; padding-bottom:4px;">Risks</h2>
+  <ul style="font-size:13px; line-height:1.6;">
+    <li><strong>Feasibility (High):</strong> Native List/Record sublist "New" creation may not pass the parent transaction/line context to the child record. Verify via spike before development; if unsupported, re-scope to a Suitelet/UI-based approach.</li>
+    <li><strong>Field ID accuracy (Low):</strong> The sublist field ID and its relationship to <code>customrecord_rax_lot</code> should be confirmed directly in the account rather than assumed.</li>
+    <li><strong>Orphaned records (Low):</strong> Lot records tied to removed PO lines are not cleaned up, which may accumulate stale traceability records over time; acceptable per current scope decision.</li>
+  </ul>
+
+  <h2 style="font-size:15px; color:#14304d; border-bottom:1px solid #e0e3e8; padding-bottom:4px;">Estimate Table</h2>
+  <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:8px;">
+    <thead>
+      <tr style="background:#14304d; color:#ffffff;">
+        <th style="text-align:left; padding:8px;">Item</th>
+        <th style="text-align:left; padding:8px;">Category</th>
+        <th style="text-align:left; padding:8px;">Size</th>
+        <th style="text-align:right; padding:8px;">Hours</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #e0e3e8;">
+        <td style="padding:8px;">Name field &mdash; remove from user entry</td>
+        <td style="padding:8px;">Tech Services (native configuration)</td>
+        <td style="padding:8px;">Extra Small</td>
+        <td style="padding:8px; text-align:right;">1</td>
+      </tr>
+      <tr style="border-bottom:1px solid #e0e3e8;">
+        <td style="padding:8px;">Item autofill on Lot record creation</td>
+        <td style="padding:8px;">Standard Script (User Event)</td>
+        <td style="padding:8px;">Small</td>
+        <td style="padding:8px; text-align:right;">7</td>
+      </tr>
+      <tr style="border-bottom:1px solid #e0e3e8; font-style:italic; color:#5b6472;">
+        <td style="padding:8px;" colspan="3">Bundled-efficiency adjustment (multiple deliverables)</td>
+        <td style="padding:8px; text-align:right;">-0.8</td>
+      </tr>
+      <tr style="border-bottom:1px solid #e0e3e8; font-style:italic; color:#5b6472;">
+        <td style="padding:8px;" colspan="3">Unit testing (10% of reduced technical hours)</td>
+        <td style="padding:8px; text-align:right;">0.7</td>
+      </tr>
+      <tr style="border-bottom:1px solid #e0e3e8; font-style:italic; color:#5b6472;">
+        <td style="padding:8px;" colspan="3">Confidence padding (5/5 completeness)</td>
+        <td style="padding:8px; text-align:right;">0%</td>
+      </tr>
+      <tr style="background:#f4f5f7; font-weight:bold;">
+        <td style="padding:8px;" colspan="3">Total Technical Estimate</td>
+        <td style="padding:8px; text-align:right;" id="fld-total-hours" contenteditable="true">8</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-size:15px; color:#14304d; border-bottom:1px solid #e0e3e8; padding-bottom:4px; margin-top:24px;">Customer-Facing Section</h2>
+  <div style="background:#f4f7fb; border:1px solid #d5e0ec; border-radius:6px; padding:16px;">
+    <p style="font-size:13px; line-height:1.6; margin-top:0;">
+      This estimate covers two updates to the Lot tracking record used with Purchase Orders: removing the requirement to manually enter a name on new Lot records, and ensuring the Item field is automatically populated to match the Purchase Order line the Lot record is created from, even if a different item was previously selected.
+    </p>
+    <p style="font-size:13px; line-height:1.6; margin-bottom:0;">
+      <strong>Estimated Effort: 8 hours.</strong> A short technical review will confirm feasibility of the automatic Item population before development begins; if that review surfaces a need for a different approach, we will follow up with a revised estimate before proceeding.
+    </p>
+  </div>
+
+  <h2 style="font-size:15px; color:#14304d; border-bottom:1px solid #e0e3e8; padding-bottom:4px; margin-top:24px;">Original Use Case Source</h2>
+  <p style="font-size:12px; line-height:1.6; color:#5b6472; white-space:pre-wrap;">Custom record customrecord_rax_lot: (1) Name field should not require manual entry &mdash; resolved as a native config change since auto-numbering is enabled; Include Name Field / equivalent setting will be adjusted. (2) Item field should autofill on the Lot record. Clarified through discussion: Lot records are created manually via a List/Record sublist field ("New") on the Purchase Order line. The Item field on the newly created Lot record should be set from that PO line's item, including overwriting any existing value, via a script deployed on the Lot record itself, triggered on record entry/creation. Existing reference script: rax_ue_lot_capture.js (User Event on Assembly Build / Item Fulfillment / Item Receipt) captures Lot records for those transaction types but does not cover this PO-line creation path.</p>
+
+  <button onclick="copySolution()" style="margin-top:20px; background:#14304d; color:#ffffff; border:none; border-radius:6px; padding:10px 18px; font-size:13px; cursor:pointer;">Copy to Clipboard</button>
+
+</div>
+
+<script>
+function copySolution() {
+  var el = document.getElementById('solutionapproach');
+  var range = document.createRange();
+  range.selectNode(el);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  try {
+    document.execCommand('copy');
+  } catch (e) {}
+  sel.removeAllRanges();
+}
+</script>
+
+</body>
+</html>

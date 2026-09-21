@@ -1,0 +1,20 @@
+<clientscript scriptid="customscript_rax_cs_next_approver_guard">
+  <name>RAX Next Approver Guard</name>
+  <scriptfile>[/SuiteScripts/RionAX/rax_cs_next_approver_guard.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_rax_cs_nag_vb">
+      <status>RELEASED</status>
+      <isdeployed>T</isdeployed>
+      <loglevel>DEBUG</loglevel>
+      <allroles>T</allroles>
+      <recordtype>VENDORBILL</recordtype>
+    </scriptdeployment>
+    <scriptdeployment scriptid="customdeploy_rax_cs_nag_po">
+      <status>RELEASED</status>
+      <isdeployed>T</isdeployed>
+      <loglevel>DEBUG</loglevel>
+      <allroles>T</allroles>
+      <recordtype>PURCHASEORDER</recordtype> <!-- PLACEHOLDER: verify against NetSuite SDF recordtype enum before deploy, same as customdeploy_rax_ue_po_approval -->
+    </scriptdeployment>
+  </scriptdeployments>
+</clientscript>

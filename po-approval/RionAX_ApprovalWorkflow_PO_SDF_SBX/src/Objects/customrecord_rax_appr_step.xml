@@ -1,0 +1,138 @@
+<customrecordtype scriptid="customrecord_rax_appr_step">
+  <accesstype>NONENEEDED</accesstype>
+  <allowattachments>F</allowattachments>
+  <allowinlineediting>F</allowinlineediting>
+  <allowquickadd>F</allowquickadd>
+  <allowquicksearch>F</allowquicksearch>
+  <allowuiaccess>T</allowuiaccess>
+  <description>One approval step in a vendor bill's chain: the department subtotal it covers, the band that subtotal fell into, and the approver pair from the matrix. Exactly one step per bill is Current. Written and maintained by rax_ue_vb_approval and rax_lib_approval - do not edit by hand.</description>
+  <enablenumbering>T</enablenumbering>
+  <includename>F</includename>
+  <isinactive>F</isinactive>
+  <isordered>F</isordered>
+  <recordname>Approval Steps</recordname>
+  <showcreationdate>T</showcreationdate>
+  <showid>T</showid>
+  <showlastmodified>T</showlastmodified>
+  <shownotes>F</shownotes>
+  <showowner>F</showowner>
+  <customrecordcustomfields>
+    <customrecordcustomfield scriptid="custrecord_rax_st_bill">
+      <fieldtype>SELECT</fieldtype>
+      <label>Transaction</label>
+      <ismandatory>T</ismandatory>
+      <selectrecordtype>-30</selectrecordtype>
+      <isparent>T</isparent>
+      <parentsubtab>[scriptid=custtab_rax_approval]</parentsubtab>
+      <description>Record is Parent, so steps cascade-delete with the parent transaction (Vendor Bill or Purchase Order). Label reads "Transaction" now that the same step record backs both types; the scriptid is unchanged.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_seq">
+      <fieldtype>INTEGER</fieldtype>
+      <label>Step</label>
+      <ismandatory>T</ismandatory>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_dept">
+      <fieldtype>MULTISELECT</fieldtype>
+      <label>Departments Covered</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>-102</selectrecordtype>
+      <description>More than one when several departments deduplicated onto the same approver.</description>
+      <showinlist>F</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_label">
+      <fieldtype>TEXT</fieldtype>
+      <label>Covers</label>
+      <ismandatory>F</ismandatory>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_amount">
+      <fieldtype>CURRENCY</fieldtype>
+      <label>Amount</label>
+      <ismandatory>F</ismandatory>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_level">
+      <fieldtype>SELECT</fieldtype>
+      <label>Approval Level</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>[scriptid=customrecord_rax_approval_level]</selectrecordtype>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_level_seq">
+      <fieldtype>INTEGER</fieldtype>
+      <label>Level Sequence</label>
+      <ismandatory>F</ismandatory>
+      <showinlist>F</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_primary">
+      <fieldtype>SELECT</fieldtype>
+      <label>Primary Approver</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>-4</selectrecordtype>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_secondary">
+      <fieldtype>SELECT</fieldtype>
+      <label>Secondary Approver</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>-4</selectrecordtype>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_status">
+      <fieldtype>TEXT</fieldtype>
+      <label>Status</label>
+      <ismandatory>T</ismandatory>
+      <description>Pending / Current / Approved / Denied / Skipped. Plain text on purpose: written and read only by the approval scripts, so it needs no custom-list lookup at save time.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_decided_by">
+      <fieldtype>SELECT</fieldtype>
+      <label>Decided By</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>-4</selectrecordtype>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_decided_on">
+      <fieldtype>DATETIMETZ</fieldtype>
+      <label>Decided On</label>
+      <ismandatory>F</ismandatory>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_comment">
+      <fieldtype>TEXTAREA</fieldtype>
+      <label>Comment</label>
+      <ismandatory>F</ismandatory>
+      <showinlist>F</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_is_gate">
+      <fieldtype>CHECKBOX</fieldtype>
+      <label>Bill Total Gate</label>
+      <ismandatory>F</ismandatory>
+      <showinlist>F</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_st_unresolved">
+      <fieldtype>CHECKBOX</fieldtype>
+      <label>Unresolved (Fallback Routed)</label>
+      <ismandatory>F</ismandatory>
+      <description>Ticked when no matrix cell matched. Report on this to find configuration gaps.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+  </customrecordcustomfields>
+</customrecordtype>

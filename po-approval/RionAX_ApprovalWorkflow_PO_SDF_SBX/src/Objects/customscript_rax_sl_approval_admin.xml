@@ -1,0 +1,15 @@
+<suitelet scriptid="customscript_rax_sl_approval_admin">
+  <name>RAX SL Approval Administration</name>
+  <notifyowner>T</notifyowner>
+  <scriptfile>[/SuiteScripts/RionAX/rax_sl_approval_admin.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_rax_sl_approval_admin">
+      <title>RAX Approval Administration</title>
+      <status>RELEASED</status>
+      <isdeployed>T</isdeployed>
+      <loglevel>DEBUG</loglevel>
+      <allroles>T</allroles>
+      <isonline>F</isonline>
+    </scriptdeployment>
+  </scriptdeployments>
+</suitelet>

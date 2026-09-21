@@ -1,0 +1,69 @@
+<customrecordtype scriptid="customrecord_rax_approval_level">
+  <accesstype>NONENEEDED</accesstype>
+  <allowattachments>F</allowattachments>
+  <allowinlineediting>F</allowinlineediting>
+  <allowquickadd>F</allowquickadd>
+  <allowquicksearch>F</allowquicksearch>
+  <allowuiaccess>T</allowuiaccess>
+  <description>Delegation of Authority bands with dollar thresholds. The applicable band is the lowest-sequence level whose threshold covers the amount. Exactly one level should be flagged Unlimited, and it must carry the highest sequence. The gate approver on a level is appended as a final approval step when the BILL TOTAL bands into that level but no department subtotal did.</description>
+  <enablenumbering>F</enablenumbering>
+  <includename>T</includename>
+  <isinactive>F</isinactive>
+  <isordered>F</isordered>
+  <recordname>RAX Approval Level</recordname>
+  <showcreationdate>F</showcreationdate>
+  <showid>T</showid>
+  <showlastmodified>T</showlastmodified>
+  <shownotes>F</shownotes>
+  <showowner>F</showowner>
+  <customrecordcustomfields>
+    <customrecordcustomfield scriptid="custrecord_rax_al_sequence">
+      <fieldtype>INTEGER</fieldtype>
+      <label>Sequence</label>
+      <ismandatory>T</ismandatory>
+      <description>Band order, lowest first. Must be unique. Blank or duplicate sequences make band selection non-deterministic.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_al_threshold">
+      <fieldtype>CURRENCY</fieldtype>
+      <label>Approval Threshold</label>
+      <ismandatory>F</ismandatory>
+      <description>Upper bound of this band, inclusive. Leave blank only when Unlimited is ticked.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_al_unlimited">
+      <fieldtype>CHECKBOX</fieldtype>
+      <label>Unlimited (Top Band)</label>
+      <ismandatory>F</ismandatory>
+      <description>Catch-all band with no upper bound. Exactly one level may carry this.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_al_gate_approver">
+      <fieldtype>SELECT</fieldtype>
+      <label>Total Gate Approver</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>-4</selectrecordtype>
+      <description>Appended as a final step when the bill total reaches this band but no single department subtotal did. Prevents threshold evasion by splitting a bill across departments.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_al_gate_secondary">
+      <fieldtype>SELECT</fieldtype>
+      <label>Total Gate Secondary</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>-4</selectrecordtype>
+      <showinlist>F</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_al_universal">
+      <fieldtype>CHECKBOX</fieldtype>
+      <label>Universal Approver Level</label>
+      <ismandatory>F</ismandatory>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+  </customrecordcustomfields>
+</customrecordtype>

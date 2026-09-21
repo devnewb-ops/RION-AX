@@ -1,0 +1,8 @@
+<transactionbodycustomfield scriptid="custbody_rax_appr_chain">
+  <applyformatting>F</applyformatting>
+  <bodypurchase>T</bodypurchase>
+  <displaytype>HIDDEN</displaytype>
+  <fieldtype>TEXTAREA</fieldtype>
+  <label>RAX Pending Chain Payload</label>
+  <storevalue>T</storevalue>
+</transactionbodycustomfield>

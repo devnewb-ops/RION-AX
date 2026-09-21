@@ -1,0 +1,21 @@
+<usereventscript scriptid="customscript_rax_ue_vb_approval">
+  <name>RAX UE Transaction Approval</name>
+  <notifyowner>T</notifyowner>
+  <scriptfile>[/SuiteScripts/RionAX/rax_ue_vb_approval.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_rax_ue_vb_approval">
+      <status>RELEASED</status>
+      <isdeployed>T</isdeployed>
+      <loglevel>DEBUG</loglevel>
+      <allroles>T</allroles>
+      <recordtype>VENDORBILL</recordtype>
+    </scriptdeployment>
+    <scriptdeployment scriptid="customdeploy_rax_ue_po_approval">
+      <status>RELEASED</status>
+      <isdeployed>T</isdeployed>
+      <loglevel>DEBUG</loglevel>
+      <allroles>T</allroles>
+      <recordtype>PURCHASEORDER</recordtype> <!-- PLACEHOLDER: verify against NetSuite SDF recordtype enum before deploy -->
+    </scriptdeployment>
+  </scriptdeployments>
+</usereventscript>

@@ -1,0 +1,19 @@
+<customlist scriptid="customlist_rax_txn_applies_to">
+  <name>RAX Transaction Applies To</name>
+  <isinactive>F</isinactive>
+  <isordered>T</isordered>
+  <customvalues>
+    <customvalue scriptid="customvalue_rax_applies_vb">
+      <value>Vendor Bill</value>
+      <isinactive>F</isinactive>
+    </customvalue>
+    <customvalue scriptid="customvalue_rax_applies_po">
+      <value>Purchase Order</value>
+      <isinactive>F</isinactive>
+    </customvalue>
+    <customvalue scriptid="customvalue_rax_applies_both">
+      <value>Both</value>
+      <isinactive>F</isinactive>
+    </customvalue>
+  </customvalues>
+</customlist>

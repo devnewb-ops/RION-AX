@@ -1,0 +1,9 @@
+<transactionbodycustomfield scriptid="custbody_rax_bill_secondary">
+  <applyformatting>F</applyformatting>
+  <bodypurchase>T</bodypurchase>
+  <displaytype>NORMAL</displaytype>
+  <fieldtype>SELECT</fieldtype>
+  <label>Secondary Approver</label>
+  <storevalue>T</storevalue>
+  <selectrecordtype>-4</selectrecordtype>
+</transactionbodycustomfield>

@@ -1,0 +1,9 @@
+<transactionbodycustomfield scriptid="custbody_rax_appr_status">
+  <applyformatting>F</applyformatting>
+  <bodypurchase>T</bodypurchase>
+  <displaytype>LOCKED</displaytype>
+  <fieldtype>TEXT</fieldtype>
+  <label>Approval Status</label>
+  <storevalue>T</storevalue>
+  <subtab>[scriptid=custtab_rax_approval]</subtab>
+</transactionbodycustomfield>

@@ -1,0 +1,80 @@
+<customrecordtype scriptid="customrecord_rax_approval_rule">
+  <accesstype>NONENEEDED</accesstype>
+  <allowattachments>F</allowattachments>
+  <allowinlineediting>F</allowinlineediting>
+  <allowquickadd>F</allowquickadd>
+  <allowquicksearch>F</allowquicksearch>
+  <allowuiaccess>T</allowuiaccess>
+  <description>Approval matrix cell: Approval Level + Department mapped to a primary and secondary approver. (Level, Department) must be unique. Maintained through the RAX Approval Administration Suitelet; inline editing is disabled so that validation cannot be bypassed.</description>
+  <enablenumbering>T</enablenumbering>
+  <includename>F</includename>
+  <isinactive>F</isinactive>
+  <isordered>F</isordered>
+  <recordname>RAX Approval Rule</recordname>
+  <showcreationdate>F</showcreationdate>
+  <showid>T</showid>
+  <showlastmodified>T</showlastmodified>
+  <shownotes>F</shownotes>
+  <showowner>F</showowner>
+  <customrecordcustomfields>
+    <customrecordcustomfield scriptid="custrecord_rax_apr_level">
+      <fieldtype>SELECT</fieldtype>
+      <label>Approval Level</label>
+      <ismandatory>T</ismandatory>
+      <selectrecordtype>[scriptid=customrecord_rax_approval_level]</selectrecordtype>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_apr_dept">
+      <fieldtype>SELECT</fieldtype>
+      <label>Department</label>
+      <ismandatory>T</ismandatory>
+      <selectrecordtype>-102</selectrecordtype>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_apr_requirement">
+      <fieldtype>SELECT</fieldtype>
+      <label>Approval Requirement</label>
+      <ismandatory>T</ismandatory>
+      <selectrecordtype>[scriptid=customlist_rax_approval_requirement]</selectrecordtype>
+      <description>Mandatory. A blank requirement is what allowed bills to auto-approve under the previous build.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_apr_applies_to">
+      <fieldtype>SELECT</fieldtype>
+      <label>Transaction Type</label>
+      <ismandatory>T</ismandatory>
+      <selectrecordtype>[scriptid=customlist_rax_txn_applies_to]</selectrecordtype>
+      <description>Which transaction type this cell governs. The Approval Level (band) is shared across every transaction type; this is what lets Vendor Bill and Purchase Order route to different approvers for the same band/department. "Both" is not permitted here - create one row per type when the approver is the same for each.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_apr_approver">
+      <fieldtype>SELECT</fieldtype>
+      <label>Approver</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>-4</selectrecordtype>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_apr_secondary">
+      <fieldtype>SELECT</fieldtype>
+      <label>Secondary Approver</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>-4</selectrecordtype>
+      <description>May approve interchangeably with the primary. Not a fallback - either person can action the step.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_apr_use_bill_sec">
+      <fieldtype>CHECKBOX</fieldtype>
+      <label>Use Bill Secondary Approver</label>
+      <ismandatory>F</ismandatory>
+      <description>The employee selected in the Secondary Approver field on the Vendor Bill acts on this cell. With a named primary, the bill selection becomes the co-approver; with no named primary, the bill selection IS the approver.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+  </customrecordcustomfields>
+</customrecordtype>

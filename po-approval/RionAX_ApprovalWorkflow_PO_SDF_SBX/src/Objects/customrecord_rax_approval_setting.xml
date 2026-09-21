@@ -1,0 +1,71 @@
+<customrecordtype scriptid="customrecord_rax_approval_setting">
+  <accesstype>NONENEEDED</accesstype>
+  <allowattachments>F</allowattachments>
+  <allowinlineediting>F</allowinlineediting>
+  <allowquickadd>F</allowquickadd>
+  <allowquicksearch>F</allowquicksearch>
+  <allowuiaccess>T</allowuiaccess>
+  <description>Global approval policy. Exactly ONE active record is supported - a second record makes policy depend on search order. Managed through the RAX Approval Administration Suitelet.</description>
+  <enablenumbering>F</enablenumbering>
+  <includename>T</includename>
+  <isinactive>F</isinactive>
+  <isordered>F</isordered>
+  <recordname>RAX Approval Setting</recordname>
+  <showcreationdate>F</showcreationdate>
+  <showid>T</showid>
+  <showlastmodified>T</showlastmodified>
+  <shownotes>F</shownotes>
+  <showowner>F</showowner>
+  <customrecordcustomfields>
+    <customrecordcustomfield scriptid="custrecord_rax_as_block_self">
+      <fieldtype>CHECKBOX</fieldtype>
+      <label>Prevent Self-Approval</label>
+      <ismandatory>F</ismandatory>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_as_exempt_roles">
+      <fieldtype>MULTISELECT</fieldtype>
+      <label>Approval Override Roles</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>-118</selectrecordtype>
+      <description>Roles that bypass the self-approval block and may edit a fully approved bill. Editing an approved bill still resets every approval on it.</description>
+      <showinlist>F</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_as_fallback_approver">
+      <fieldtype>SELECT</fieldtype>
+      <label>Fallback Approver</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>-4</selectrecordtype>
+      <description>Receives steps that cannot be resolved at all - a line with no department, or an unconfigured cell when Strict Gap Handling is on. Required if Strict Gap Handling is ticked.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_as_strict_gaps">
+      <fieldtype>CHECKBOX</fieldtype>
+      <label>Strict Gap Handling</label>
+      <ismandatory>F</ismandatory>
+      <description>OFF (default): a department with no matrix rules requires no approval, and a band with no cell inherits the nearest configured band below it. ON: any unresolved cell routes to the Fallback Approver instead. Turn this on only once the matrix is fully configured.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_as_skip_native_approver">
+      <fieldtype>CHECKBOX</fieldtype>
+      <label>Do Not Populate Native Next Approver</label>
+      <ismandatory>F</ismandatory>
+      <description>Unticked (default): the current step's primary is written to the native Next Approver field, so the bill appears in the standard Bills to Approve queue. Tick this if NetSuite rejects the save with an approver-reference error - the approval chain, the Approval tab and the payment guard all work without it.</description>
+      <showinlist>T</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+    <customrecordcustomfield scriptid="custrecord_rax_as_applies_to">
+      <fieldtype>SELECT</fieldtype>
+      <label>Applies To</label>
+      <ismandatory>F</ismandatory>
+      <selectrecordtype>[scriptid=customlist_rax_txn_applies_to]</selectrecordtype>
+      <description>Reserved for a future phase where self-approval blocking, exempt roles or the fallback approver need to diverge between Vendor Bills and Purchase Orders. Both (default) means one shared policy. Hidden from the Approval Matrix Administration Suitelet while Both is the only real-world value; the engine still reads it.</description>
+      <showinlist>F</showinlist>
+      <storevalue>T</storevalue>
+    </customrecordcustomfield>
+  </customrecordcustomfields>
+</customrecordtype>
